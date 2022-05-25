@@ -1,0 +1,10 @@
+/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/build/linux/x64/debug/bundle/bytebank
+/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/build/linux/x64/debug/bundle/data/icudtl.dat
+/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/build/linux/x64/debug/bundle/lib/libflutter_linux_gtk.so
+/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/build/linux/x64/debug/bundle/data/flutter_assets/NOTICES.Z
+/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/build/linux/x64/debug/bundle/data/flutter_assets/AssetManifest.json
+/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/build/linux/x64/debug/bundle/data/flutter_assets/FontManifest.json
+/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/build/linux/x64/debug/bundle/data/flutter_assets/version.json
+/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/build/linux/x64/debug/bundle/data/flutter_assets/fonts/MaterialIcons-Regular.otf
+/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/build/linux/x64/debug/bundle/data/flutter_assets/kernel_blob.bin
+/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/build/linux/x64/debug/bundle/data/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf

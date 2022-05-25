@@ -1,0 +1,28 @@
+# ninja log v5
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/libflutter_linux_gtk.so	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_basic_message_channel.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_binary_codec.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_binary_messenger.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_dart_project.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_engine.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_json_message_codec.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_json_method_codec.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_message_codec.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_method_call.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_method_channel.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_method_codec.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_method_response.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_plugin_registrar.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_plugin_registry.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_standard_message_codec.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_standard_method_codec.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_string_codec.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_value.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/fl_view.h	f217b278907951cc
+0	9229	0	/home/carlosjr/Documents/Estudos Flutter/first-project/bytebank/linux/flutter/ephemeral/flutter_linux/flutter_linux.h	f217b278907951cc
+0	9229	0	flutter/_phony_	f217b278907951cc
+9229	9748	1653072131	CMakeFiles/bytebank.dir/flutter/generated_plugin_registrant.cc.o	dc7da19a8b0d28a0
+9229	9810	1653072131	CMakeFiles/bytebank.dir/main.cc.o	ec72efb3c9fcd7bc
+9229	9847	1653072131	CMakeFiles/bytebank.dir/my_application.cc.o	ab9eee42eae18cd3
+9847	10094	1653072131	intermediates_do_not_run/bytebank	dc998438e0430be8
+10094	10162	0	CMakeFiles/install.util	fb1a83f43d087253
