@@ -1,3 +1,6 @@
+import 'package:bytebank/screens/contacts/form.dart';
+import 'package:bytebank/screens/contacts/list.dart';
+import 'package:bytebank/screens/dashboard.dart';
 import 'package:bytebank/screens/transferencias/lista.dart';
 import 'package:flutter/material.dart';
 
@@ -25,49 +28,3 @@ class BytebankApp extends StatelessWidget {
   }
 }
 
-class Dashboard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Dashboard'),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset('images/bytebank_logo.png'),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                color: Theme.of(context).primaryColor,
-                height: 100,
-                width: 150,
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(
-                      Icons.people,
-                      color: Colors.white,
-                      size: 32.0,
-                    ),
-                    Text(
-                      'Contatos',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ));
-  }
-}
