@@ -54,7 +54,7 @@ class _ContactFormState extends State<ContactForm> {
                     final String? nome = _controllerNome.text;
                     final int? numeroDaConta = int.tryParse(_controllerNumeroConta.text);
                     if (nome != null && nome != '' && numeroDaConta != null){
-                      final Contact novoCcontato = Contact(nome, numeroDaConta);
+                      final Contact novoCcontato = Contact(0 ,nome, numeroDaConta);
                       Navigator.pop(context, novoCcontato);
                     }else{
                       final IvalidFildsPopUP invalidFilds = IvalidFildsPopUP();
