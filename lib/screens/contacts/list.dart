@@ -3,7 +3,12 @@ import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/screens/contacts/form.dart';
 import 'package:flutter/material.dart';
 
-class ContactsList extends StatelessWidget {
+class ContactsList extends StatefulWidget {
+  @override
+  State<ContactsList> createState() => _ContactsListState();
+}
+
+class _ContactsListState extends State<ContactsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +57,7 @@ class ContactsList extends StatelessWidget {
                 ),
               )
               .then(
-                (response) => debugPrint(response.toString()),
+                (value) => setState(() {}),
               );
         },
         child: const Icon(Icons.add),

@@ -1,3 +1,4 @@
+import 'package:bytebank/database/app_database.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/invalid_filds_popup.dart';
@@ -10,7 +11,6 @@ class ContactForm extends StatefulWidget {
 
 class _ContactFormState extends State<ContactForm> {
   final TextEditingController _controllerNome = TextEditingController();
-
   final TextEditingController _controllerNumeroConta = TextEditingController();
 
   @override
@@ -52,11 +52,15 @@ class _ContactFormState extends State<ContactForm> {
                 child: ElevatedButton(
                   onPressed: () {
                     final String? nome = _controllerNome.text;
-                    final int? numeroDaConta = int.tryParse(_controllerNumeroConta.text);
-                    if (nome != null && nome != '' && numeroDaConta != null){
-                      final Contact novoCcontato = Contact(0 ,nome, numeroDaConta);
-                      Navigator.pop(context, novoCcontato);
-                    }else{
+                    final int? numeroDaConta =
+                        int.tryParse(_controllerNumeroConta.text);
+                    if (nome != null && nome != '' && numeroDaConta != null) {
+                      final Contact novoCcontato =
+                          Contact(0, nome, numeroDaConta);
+                      save(novoCcontato).then(
+                        (id) => Navigator.pop(context),
+                      );
+                    } else {
                       final IvalidFildsPopUP invalidFilds = IvalidFildsPopUP();
                       invalidFilds.throwPopUp(context);
                     }
