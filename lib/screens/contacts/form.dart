@@ -1,4 +1,4 @@
-import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/invalid_filds_popup.dart';
@@ -12,6 +12,7 @@ class ContactForm extends StatefulWidget {
 class _ContactFormState extends State<ContactForm> {
   final TextEditingController _controllerNome = TextEditingController();
   final TextEditingController _controllerNumeroConta = TextEditingController();
+  final ContactDao _contactDao = ContactDao();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +58,7 @@ class _ContactFormState extends State<ContactForm> {
                     if (nome != null && nome != '' && numeroDaConta != null) {
                       final Contact novoCcontato =
                           Contact(0, nome, numeroDaConta);
-                      save(novoCcontato).then(
+                      _contactDao.save(novoCcontato).then(
                         (id) => Navigator.pop(context),
                       );
                     } else {
