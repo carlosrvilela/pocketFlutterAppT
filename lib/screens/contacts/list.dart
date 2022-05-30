@@ -16,7 +16,7 @@ class _ContactsListState extends State<ContactsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Contatos'),
+        title: const Text('Transfer'),
       ),
       body: FutureBuilder<List<Contact>>(
         initialData: [],
@@ -81,13 +81,13 @@ class _ContactItem extends StatelessWidget {
     return Card(
       child: ListTile(
         title: Text(
-          contact.nome,
+          contact.name,
           style: const TextStyle(
             fontSize: 24.0,
           ),
         ),
         subtitle: Text(
-          contact.numeroConta.toString(),
+          contact.accountNumber.toString(),
           style: const TextStyle(
             fontSize: 16.0,
           ),

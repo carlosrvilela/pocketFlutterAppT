@@ -22,8 +22,8 @@ class ContactDao {
 
   Map<String, dynamic> _toMap(Contact contact) {
     final Map<String, dynamic> contactMap = Map();
-    contactMap[_contactName] = contact.nome;
-    contactMap[_contactAccountNumber] = contact.numeroConta;
+    contactMap[_contactName] = contact.name;
+    contactMap[_contactAccountNumber] = contact.accountNumber;
     return contactMap;
   }
 
