@@ -5,7 +5,7 @@ import 'http/web_cliente.dart';
 
 void main() {
   runApp(const BytebankApp());
-  findAll();
+  findAll().then((transactions) => print('new transectios: $transactions'));
 }
 
 class BytebankApp extends StatelessWidget {

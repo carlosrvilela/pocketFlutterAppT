@@ -1,3 +1,4 @@
+import 'package:bytebank/components/progress.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/screens/contacts/form.dart';
 import 'package:flutter/material.dart';
@@ -20,22 +21,14 @@ class _ContactsListState extends State<ContactsList> {
       ),
       body: FutureBuilder<List<Contact>>(
         initialData: [],
-        future: Future.delayed(Duration(seconds: 1)).then((value) => _contactDao.findAll()),
+        future: Future.delayed(Duration(seconds: 1))
+            .then((value) => _contactDao.findAll()),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
               break;
             case ConnectionState.waiting:
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(),
-                    Text('Bucando contatos')
-                  ],
-                ),
-              );
+              return Progress(message: 'Bucando contatos');
             case ConnectionState.active:
               break;
             case ConnectionState.done:
