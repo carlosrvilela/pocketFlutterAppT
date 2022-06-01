@@ -1,11 +1,14 @@
+import 'package:bytebank/models/transaction.dart';
 import 'package:bytebank/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 
 import 'http/web_cliente.dart';
+import 'models/contact.dart';
 
 void main() {
   runApp(const BytebankApp());
-  findAll().then((transactions) => print('new transectios: $transactions'));
+  //save(Transaction(100.0, Contact(0, 'Ciclano', 8000))).then((transaction) => print('save transactions: $transaction'));
+  //findAll().then((transactions) => print('new transectios: $transactions'));
 }
 
 class BytebankApp extends StatelessWidget {
