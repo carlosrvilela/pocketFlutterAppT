@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bytebank/components/response_dialog.dart';
 import 'package:bytebank/components/transaction_auth_dialog.dart';
 import 'package:bytebank/http/webclients/transaction_webclient.dart';
@@ -100,28 +102,58 @@ class _TransactionFormState extends State<TransactionForm> {
     String password,
     BuildContext context,
   ) async {
-   final Transaction? transaction = await _transactionWebClient.save(transactionCreated, password).catchError(
-        (error) {
-      _showFailureDialog(
-        context,
-        error,
-      );
-    }, test: (error) => error is Exception);
-
+    Transaction? transaction = await _sendTransaction(
+      transactionCreated,
+      password,
+      context,
+    );
     await _showSuccessDialog(transaction);
   }
 
-  void _showFailureDialog(BuildContext context, error) {
+  Future<Transaction?> _sendTransaction(Transaction transactionCreated,
+      String password, BuildContext context) async {
+    final Transaction? transaction = await _transactionWebClient
+        .save(transactionCreated, password)
+        .catchError(
+      (error) {
+        _showFailureDialog(
+          context,
+          message: error.message,
+        );
+      },
+      test: (error) => error is HttpException,
+    ).catchError(
+      (error) {
+        _showFailureDialog(
+          context,
+          message: 'Timeout submitting',
+        );
+      },
+      test: (error) => error is TimeoutException,
+    ).catchError(
+      (error) {
+        _showFailureDialog(
+          context,
+        );
+      },
+    );
+    return transaction;
+  }
+
+  void _showFailureDialog(
+    BuildContext context, {
+    String message = 'Unknown error',
+  }) {
     showDialog(
       context: context,
       builder: (contextDialog) {
-        return FailureDialog(error.message);
+        return FailureDialog(message);
       },
     );
   }
 
   Future<void> _showSuccessDialog(Transaction? transaction) async {
-    if (transaction != null){
+    if (transaction != null) {
       await showDialog(
           context: context,
           builder: (contextDialog) {
