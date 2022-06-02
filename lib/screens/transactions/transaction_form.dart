@@ -1,3 +1,5 @@
+import 'package:bytebank/components/response_dialog.dart';
+import 'package:bytebank/components/transaction_auth_dialog.dart';
 import 'package:bytebank/http/webclients/transaction_webclient.dart';
 import 'package:flutter/material.dart';
 import '../../components/invalid_filds_popup.dart';
@@ -7,7 +9,7 @@ import '../../models/transaction.dart';
 class TransactionForm extends StatefulWidget {
   final Contact contact;
 
-  TransactionForm(this.contact);
+  const TransactionForm(this.contact, {Key? key}) : super(key: key);
 
   @override
   _TransactionFormState createState() => _TransactionFormState();
@@ -15,13 +17,13 @@ class TransactionForm extends StatefulWidget {
 
 class _TransactionFormState extends State<TransactionForm> {
   final TextEditingController _valueController = TextEditingController();
-  final TransactionWebClient _transactionWebClient =TransactionWebClient();
+  final TransactionWebClient _transactionWebClient = TransactionWebClient();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('New transaction'),
+        title: const Text('New transaction'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -31,7 +33,7 @@ class _TransactionFormState extends State<TransactionForm> {
             children: <Widget>[
               Text(
                 widget.contact.name,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24.0,
                 ),
               ),
@@ -39,7 +41,7 @@ class _TransactionFormState extends State<TransactionForm> {
                 padding: const EdgeInsets.only(top: 16.0),
                 child: Text(
                   widget.contact.accountNumber.toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 32.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -49,9 +51,10 @@ class _TransactionFormState extends State<TransactionForm> {
                 padding: const EdgeInsets.only(top: 16.0),
                 child: TextField(
                   controller: _valueController,
-                  style: TextStyle(fontSize: 24.0),
-                  decoration: InputDecoration(labelText: 'Value'),
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  style: const TextStyle(fontSize: 24.0),
+                  decoration: const InputDecoration(labelText: 'Value'),
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
                 ),
               ),
               Padding(
@@ -59,18 +62,23 @@ class _TransactionFormState extends State<TransactionForm> {
                 child: SizedBox(
                   width: double.maxFinite,
                   child: ElevatedButton(
-                    child: Text('Transfer'),
+                    child: const Text('Transfer'),
                     onPressed: () {
                       final double? value =
                           double.tryParse(_valueController.text);
                       if (value != null && value != 0) {
                         final transactionCreated =
                             Transaction(value, widget.contact);
-                        _transactionWebClient.save(transactionCreated).then(
-                          (transaction) {
-                            Navigator.pop(context);
-                          },
-                        );
+                        showDialog(
+                            context: context,
+                            builder: (contextDialog) {
+                              return TransactionAuthDialog(
+                                onConfirm: (String password) {
+                                  _saveTransaction(
+                                      transactionCreated, password, context);
+                                },
+                              );
+                            });
                       } else {
                         final IvalidFildsPopUP invalidFilds =
                             IvalidFildsPopUP();
@@ -85,5 +93,42 @@ class _TransactionFormState extends State<TransactionForm> {
         ),
       ),
     );
+  }
+
+  void _saveTransaction(
+    Transaction transactionCreated,
+    String password,
+    BuildContext context,
+  ) async {
+   final Transaction? transaction = await _transactionWebClient.save(transactionCreated, password).catchError(
+        (error) {
+      _showFailureDialog(
+        context,
+        error,
+      );
+    }, test: (error) => error is Exception);
+
+    await _showSuccessDialog(transaction);
+  }
+
+  void _showFailureDialog(BuildContext context, error) {
+    showDialog(
+      context: context,
+      builder: (contextDialog) {
+        return FailureDialog(error.message);
+      },
+    );
+  }
+
+  Future<void> _showSuccessDialog(Transaction? transaction) async {
+    if (transaction != null){
+      await showDialog(
+          context: context,
+          builder: (contextDialog) {
+            return const SuccessDialog('Successful  transaction');
+          });
+      if (!mounted) return;
+      Navigator.pop(context);
+    }
   }
 }

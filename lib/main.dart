@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(const BytebankApp());
-  //save(Transaction(100.0, Contact(0, 'Ciclano', 8000))).then((transaction) => print('save transactions: $transaction'));
-  //findAll().then((transactions) => print('new transectios: $transactions'));
 }
 
 class BytebankApp extends StatelessWidget {
