@@ -14,6 +14,8 @@ const _textoCamposInvalidos = 'Um ou mais campos inválidos';
 const _textoErro = 'Erro!';
 
 class FormularioDeTransferencia extends StatefulWidget {
+  const FormularioDeTransferencia({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return FormularioDeTransferenciaState();
@@ -29,7 +31,7 @@ class FormularioDeTransferenciaState extends State<FormularioDeTransferencia> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_tituloAppBar),
+        title: const Text(_tituloAppBar),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -45,7 +47,7 @@ class FormularioDeTransferenciaState extends State<FormularioDeTransferencia> {
                 icone: Icons.monetization_on),
             ElevatedButton(
               onPressed: () => _criaTransferencia(context),
-              child: Text(_textoBotaoComfrimar),
+              child: const Text(_textoBotaoComfrimar),
             ),
           ],
         ),
@@ -64,14 +66,14 @@ class FormularioDeTransferenciaState extends State<FormularioDeTransferencia> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(_textoErro),
-            content: Text(_textoCamposInvalidos),
+            title: const Text(_textoErro),
+            content: const Text(_textoCamposInvalidos),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text(_textoBotaoVoltar),
+                child: const Text(_textoBotaoVoltar),
               )
             ],
           );

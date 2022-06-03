@@ -7,6 +7,8 @@ const _tituloAppBar = 'Transferências';
 class ListaDeTransferencias extends StatefulWidget {
   final List<Transferencia> _transferencias = [];
 
+  ListaDeTransferencias({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return ListaDeTransferenciasState();
@@ -14,11 +16,11 @@ class ListaDeTransferencias extends StatefulWidget {
 }
 
 class ListaDeTransferenciasState extends State<ListaDeTransferencias> {
-  // @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_tituloAppBar),
+        title: const Text(_tituloAppBar),
       ),
       body: ListView.builder(
           itemCount: widget._transferencias.length,
@@ -27,11 +29,11 @@ class ListaDeTransferenciasState extends State<ListaDeTransferencias> {
             return ItemTransferencia(transferencia);
           }),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           final Future future =
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return FormularioDeTransferencia();
+            return const FormularioDeTransferencia();
           }));
           future.then((transferenciaRecebida) {
             _atualizaTransferencias(transferenciaRecebida);
@@ -53,17 +55,15 @@ class ListaDeTransferenciasState extends State<ListaDeTransferencias> {
 class ItemTransferencia extends StatelessWidget {
   final Transferencia _transferencia;
 
-  ItemTransferencia(this._transferencia);
+  const ItemTransferencia(this._transferencia, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: Icon(Icons.monetization_on),
-        title:
-            Text(_transferencia.valor.toString() + ' - Valor da Transferência'),
-        subtitle:
-            Text(_transferencia.numeroConta.toString() + ' - Númroda conta'),
+        leading: const Icon(Icons.monetization_on),
+        title: Text('${_transferencia.valor} - Valor da Transferência'),
+        subtitle: Text('${_transferencia.numeroConta} - Númroda conta'),
       ),
     );
   }

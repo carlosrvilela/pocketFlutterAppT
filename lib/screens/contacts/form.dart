@@ -5,6 +5,8 @@ import '../../components/invalid_filds_popup.dart';
 import '../../models/contact.dart';
 
 class ContactForm extends StatefulWidget {
+  const ContactForm({Key? key}) : super(key: key);
+
   @override
   State<ContactForm> createState() => _ContactFormState();
 }
@@ -18,7 +20,7 @@ class _ContactFormState extends State<ContactForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Novo Contato'),
+        title: const Text('Novo Contato'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -26,10 +28,10 @@ class _ContactFormState extends State<ContactForm> {
           children: [
             TextField(
               controller: _controllerNome,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24.0,
               ),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Nome Completo',
               ),
             ),
@@ -37,10 +39,10 @@ class _ContactFormState extends State<ContactForm> {
               padding: const EdgeInsets.only(top: 8.0),
               child: TextField(
                 controller: _controllerNumeroConta,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24.0,
                 ),
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Número da Conta',
                 ),
                 keyboardType: TextInputType.number,
@@ -66,7 +68,7 @@ class _ContactFormState extends State<ContactForm> {
                       invalidFilds.throwPopUp(context);
                     }
                   },
-                  child: Text('Adicionar Novo Contato'),
+                  child: const Text('Adicionar Novo Contato'),
                 ),
               ),
             ),

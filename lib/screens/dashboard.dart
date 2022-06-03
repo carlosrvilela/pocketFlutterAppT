@@ -3,11 +3,13 @@ import 'package:bytebank/screens/transactions/list.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
+  const Dashboard({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Dashboard'),
+          title: const Text('Dashboard'),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -17,7 +19,7 @@ class Dashboard extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Image.asset('images/bytebank_logo.png'),
             ),
-            Container(
+            SizedBox(
               height: 120,
               child: ListView(
                 scrollDirection: Axis.horizontal,
@@ -46,7 +48,7 @@ class Dashboard extends StatelessWidget {
   void _showContactsList(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ContactsList(),
+        builder: (context) => const ContactsList(),
       ),
     );
   }
@@ -65,7 +67,7 @@ class _FeatureItem extends StatelessWidget {
   final IconData icon;
   final Function onClick;
 
-  _FeatureItem(this.name, this.icon, {required this.onClick});
+  const _FeatureItem(this.name, this.icon, {required this.onClick});
 
   @override
   Widget build(BuildContext context) {
@@ -83,13 +85,13 @@ class _FeatureItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Icon(
-                  this.icon,
+                  icon,
                   color: Colors.white,
                   size: 32.0,
                 ),
                 Text(
-                  this.name,
-                  style: TextStyle(
+                  name,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16.0,
                   ),

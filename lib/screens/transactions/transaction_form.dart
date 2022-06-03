@@ -6,6 +6,7 @@ import 'package:bytebank/http/webclients/transaction_webclient.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import '../../components/invalid_filds_popup.dart';
+import '../../components/progress.dart';
 import '../../models/contact.dart';
 import '../../models/transaction.dart';
 
@@ -22,6 +23,7 @@ class _TransactionFormState extends State<TransactionForm> {
   final TextEditingController _valueController = TextEditingController();
   final TransactionWebClient _transactionWebClient = TransactionWebClient();
   final String transactionId = const Uuid().v4();
+  bool _sending = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,15 @@ class _TransactionFormState extends State<TransactionForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Visibility(
+                visible: _sending,
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Progress(
+                    message: 'Sending...',
+                  ),
+                ),
+              ),
               Text(
                 widget.contact.name,
                 style: const TextStyle(
@@ -112,8 +123,14 @@ class _TransactionFormState extends State<TransactionForm> {
     await _showSuccessDialog(transaction);
   }
 
-  Future<Transaction?> _sendTransaction(Transaction transactionCreated,
-      String password, BuildContext context) async {
+  Future<Transaction?> _sendTransaction(
+    Transaction transactionCreated,
+    String password,
+    BuildContext context,
+  ) async {
+    setState(() {
+      _sending = true;
+    });
     final Transaction? transaction = await _transactionWebClient
         .save(transactionCreated, password)
         .catchError(
@@ -138,7 +155,11 @@ class _TransactionFormState extends State<TransactionForm> {
           context,
         );
       },
-    );
+    ).whenComplete(() {
+      setState(() {
+        _sending = false;
+      });
+    });
     return transaction;
   }
 

@@ -10,14 +10,14 @@ class IvalidFildsPopUP {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text(_textoErro),
-              content: Text(_textoCamposInvalidos),
+              title: const Text(_textoErro),
+              content: const Text(_textoCamposInvalidos),
               actions: [
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text(_textoBotaoVoltar),
+                  child: const Text(_textoBotaoVoltar),
                 )
               ],
             );
