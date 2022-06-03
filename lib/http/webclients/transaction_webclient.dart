@@ -28,16 +28,16 @@ class TransactionWebClient {
       },
       body: transactionJson,
     );
-    
+
     if (response.statusCode == 200) {
       return Transaction.fromJson(jsonDecode(response.body));
     } else {
-      throw HttpException(_getMessage(response.statusCode));
+      throw HttpException(_getMessage(response.statusCode), response.statusCode);
     }
   }
 
   String? _getMessage(int statusCode) {
-    if(_statusCodeResponse.containsKey(statusCode)){
+    if (_statusCodeResponse.containsKey(statusCode)) {
       return _statusCodeResponse[statusCode];
     } else {
       return 'Unknown error';
@@ -53,6 +53,10 @@ class TransactionWebClient {
 
 class HttpException implements Exception {
   final String? message;
+  final int? statusCode;
 
-  HttpException(this.message);
+  HttpException(
+    this.message,
+    this.statusCode,
+  );
 }
