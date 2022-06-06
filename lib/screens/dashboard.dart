@@ -1,6 +1,5 @@
 import 'package:bytebank/screens/contacts/list.dart';
 import 'package:bytebank/screens/transactions/list.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
@@ -37,15 +36,6 @@ class Dashboard extends StatelessWidget {
                     Icons.description,
                     onClick: () {
                       _showTransactionsList(context);
-                    },
-                  ),
-                  _FeatureItem(
-                    'Crash?',
-                    Icons.description,
-                    onClick: () {
-                      throw Exception("Test Crash"); // Force a crash
-                      //FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
-                      print('Foi não?');
                     },
                   ),
                 ],
