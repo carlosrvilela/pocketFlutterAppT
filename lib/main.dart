@@ -1,14 +1,25 @@
+import 'dart:async';
+
 import 'package:bytebank/screens/dashboard.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  if (kDebugMode) {
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+  } else {
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+    FirebaseCrashlytics.instance.setUserIdentifier('user_id');
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  }
 
-  runApp(const BytebankApp());
+  runZonedGuarded<Future<void>>(() async {
+    runApp(const BytebankApp());
+  }, FirebaseCrashlytics.instance.recordError);
 }
 
 class BytebankApp extends StatelessWidget {
@@ -24,6 +35,10 @@ class BytebankApp extends StatelessWidget {
         buttonTheme: ButtonThemeData(
           buttonColor: Colors.blueAccent[700],
           textTheme: ButtonTextTheme.primary,
+        ),
+        snackBarTheme: SnackBarThemeData(
+          backgroundColor: Colors.green[800],
+          actionTextColor: Colors.white,
         ),
       ),
       home: const Dashboard(),

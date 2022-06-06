@@ -7,4 +7,4 @@ final Client client = InterceptedClient.build(
   requestTimeout: const Duration(seconds: 5),
 );
 //'http://172.26.0.1:8080/transactions';
-const String connectionURL = 'http://172.26.0.1:8080/asd';
+const String connectionURL = 'http://172.26.0.1:8080/transactions';

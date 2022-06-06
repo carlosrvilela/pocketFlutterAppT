@@ -6,6 +6,7 @@ import 'package:bytebank/http/webclients/transaction_webclient.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+
 import '../../components/invalid_filds_popup.dart';
 import '../../components/progress.dart';
 import '../../models/contact.dart';
@@ -25,10 +26,12 @@ class _TransactionFormState extends State<TransactionForm> {
   final TransactionWebClient _transactionWebClient = TransactionWebClient();
   final String transactionId = const Uuid().v4();
   bool _sending = false;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: const Text('New transaction'),
       ),
@@ -136,13 +139,15 @@ class _TransactionFormState extends State<TransactionForm> {
         .save(transactionCreated, password)
         .catchError(
       (error) {
-        FirebaseCrashlytics.instance
-            .setCustomKey('Http_Exception', error.toString());
-        FirebaseCrashlytics.instance
-            .setCustomKey('Http_Status_Code', error.statusCode);
-        FirebaseCrashlytics.instance
-            .setCustomKey('Http_Body', transactionCreated.toString());
-        FirebaseCrashlytics.instance.recordError(error, null);
+        if (FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled) {
+          FirebaseCrashlytics.instance
+              .setCustomKey('Http_Exception', error.toString());
+          FirebaseCrashlytics.instance
+              .setCustomKey('Http_Status_Code', error.statusCode);
+          FirebaseCrashlytics.instance
+              .setCustomKey('Http_Body', transactionCreated.toString());
+          FirebaseCrashlytics.instance.recordError(error, null);
+        }
 
         _showFailureDialog(
           context,
@@ -152,11 +157,13 @@ class _TransactionFormState extends State<TransactionForm> {
       test: (error) => error is HttpException,
     ).catchError(
       (error) {
-        FirebaseCrashlytics.instance
-            .setCustomKey('Timeout_Exception', error.toString());
-        FirebaseCrashlytics.instance
-            .setCustomKey('Http_Body', transactionCreated.toString());
-        FirebaseCrashlytics.instance.recordError(error, null);
+        if (FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled) {
+          FirebaseCrashlytics.instance
+              .setCustomKey('Timeout_Exception', error.toString());
+          FirebaseCrashlytics.instance
+              .setCustomKey('Http_Body', transactionCreated.toString());
+          FirebaseCrashlytics.instance.recordError(error, null);
+        }
 
         _showFailureDialog(
           context,
@@ -166,11 +173,13 @@ class _TransactionFormState extends State<TransactionForm> {
       test: (error) => error is TimeoutException,
     ).catchError(
       (error) {
-        FirebaseCrashlytics.instance
-            .setCustomKey('Unknown_Exception', error.toString());
-        FirebaseCrashlytics.instance
-            .setCustomKey('Http_Body', transactionCreated.toString());
-        FirebaseCrashlytics.instance.recordError(error, null);
+        if (FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled) {
+          FirebaseCrashlytics.instance
+              .setCustomKey('Unknown_Exception', error.toString());
+          FirebaseCrashlytics.instance
+              .setCustomKey('Http_Body', transactionCreated.toString());
+          FirebaseCrashlytics.instance.recordError(error, null);
+        }
 
         _showFailureDialog(
           context,
