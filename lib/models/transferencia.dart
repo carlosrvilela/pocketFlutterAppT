@@ -11,4 +11,12 @@ class Transferencia {
   String toString() {
     return 'Transferencia{valor: $valor, numeroConta: $numeroConta}';
   }
+
+  String toStringValor() {
+    return 'R\$ $valor';
+  }
+
+  String toStringNumeroConta() {
+    return 'Conta: $numeroConta';
+  }
 }
