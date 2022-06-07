@@ -1,5 +1,5 @@
 import 'package:bytebank/components/editor.dart';
-import 'package:bytebank/models/Saldo.dart';
+import 'package:bytebank/models/saldo.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -44,7 +44,7 @@ class FormularioDeposito extends StatelessWidget {
       _atualizaSaldo(context, valor);
       Navigator.pop(context);
     } else {
-      final IvalidFildsPopUP invalidFilds = IvalidFildsPopUP();
+      IvalidFildsPopUP invalidFilds = IvalidFildsPopUP();
       invalidFilds.throwPopUp(context);
     }
   }

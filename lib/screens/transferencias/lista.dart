@@ -33,7 +33,7 @@ class ListaDeTransferenciasState extends State<ListaDeTransferencias> {
         onPressed: () {
           final Future future =
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const FormularioDeTransferencia();
+            return FormularioDeTransferencia();
           }));
           future.then((transferenciaRecebida) {
             _atualizaTransferencias(transferenciaRecebida);

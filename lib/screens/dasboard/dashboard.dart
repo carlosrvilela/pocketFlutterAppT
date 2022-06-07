@@ -1,8 +1,9 @@
-import 'package:bytebank/models/Saldo.dart';
+import 'package:bytebank/models/saldo.dart';
 import 'package:bytebank/screens/Deposito/formulario_deposito.dart';
 import 'package:bytebank/screens/contacts/list.dart';
 import 'package:bytebank/screens/dasboard/SaldoCard.dart';
 import 'package:bytebank/screens/transactions/list.dart';
+import 'package:bytebank/screens/transferencias/formulario.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,18 +27,36 @@ class Dashboard extends StatelessWidget {
               alignment: Alignment.topCenter,
               child: SaldoCard(),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return FormularioDeposito();
-                    },
-                  ),
-                );
-              },
-              child: Text('Receber Depósito'),
+            ButtonBar(
+              alignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return FormularioDeposito();
+                        },
+                      ),
+                    );
+                  },
+                  child: Text('Receber Depósito'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return FormularioDeTransferencia();
+                        },
+                      ),
+                    );
+                  },
+                  child: Text('Nova Transferência'),
+                )
+              ],
             ),
             SizedBox(
               height: 120,
