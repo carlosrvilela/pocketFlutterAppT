@@ -18,6 +18,8 @@ class FormularioDeTransferencia extends StatelessWidget {
       TextEditingController();
   final TextEditingController _controladorCampoValor = TextEditingController();
 
+  FormularioDeTransferencia({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,13 +66,13 @@ class FormularioDeTransferencia extends StatelessWidget {
   }
 
   _validaTransferencia(context, numeroConta, valor) {
-    final _camposPreenchidos = numeroConta != null && valor != null;
-    final _saldoSuficiente = valor <=
+    final camposPreenchidos = numeroConta != null && valor != null;
+    final saldoSuficiente = valor <=
         Provider.of<Saldo>(
           context,
           listen: false,
         ).valor;
-    return _camposPreenchidos && _saldoSuficiente;
+    return camposPreenchidos && saldoSuficiente;
   }
 
   _atualizaEstado(context, novaTransferencia, valor) {

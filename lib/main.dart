@@ -6,7 +6,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -30,7 +29,7 @@ void main() async {
           create: (context) => Transferencias(),
         ),
       ],
-      child: BytebankApp(),
+      child: const BytebankApp(),
     ));
   }, FirebaseCrashlytics.instance.recordError);
 }

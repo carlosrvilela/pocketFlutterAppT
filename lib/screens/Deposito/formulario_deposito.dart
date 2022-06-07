@@ -13,11 +13,13 @@ const _textoBotaoComfrimar = 'Confirmar';
 class FormularioDeposito extends StatelessWidget {
   final TextEditingController _controladorCampoValor = TextEditingController();
 
+  FormularioDeposito({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_tituloAppBar),
+        title: const Text(_tituloAppBar),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -50,8 +52,8 @@ class FormularioDeposito extends StatelessWidget {
   }
 
   _validaDeposito(valor) {
-    final _campoPreenchido = valor != null;
-    return _campoPreenchido;
+    final campoPreenchido = valor != null;
+    return campoPreenchido;
   }
 
   _atualizaSaldo(context, valor) {

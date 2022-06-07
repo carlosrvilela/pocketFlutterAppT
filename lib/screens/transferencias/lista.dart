@@ -7,6 +7,8 @@ import 'formulario.dart';
 const _tituloAppBar = 'Transferências';
 
 class ListaDeTransferencias extends StatelessWidget {
+  const ListaDeTransferencias({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

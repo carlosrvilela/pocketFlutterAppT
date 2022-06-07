@@ -18,10 +18,10 @@ class TransactionForm extends StatefulWidget {
   const TransactionForm(this.contact, {Key? key}) : super(key: key);
 
   @override
-  _TransactionFormState createState() => _TransactionFormState();
+  TransactionFormState createState() => TransactionFormState();
 }
 
-class _TransactionFormState extends State<TransactionForm> {
+class TransactionFormState extends State<TransactionForm> {
   final TextEditingController _valueController = TextEditingController();
   final TransactionWebClient _transactionWebClient = TransactionWebClient();
   final String transactionId = const Uuid().v4();
