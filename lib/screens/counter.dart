@@ -1,3 +1,4 @@
+import 'package:bytebank/components/bloc_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,12 +17,12 @@ class CounterContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => CounterCubit(),
-      child: CounterView(),
+      child: const CounterView(),
     );
   }
 }
 
-class CounterView extends StatelessWidget {
+class CounterView extends BlocContainer {
   const CounterView({Key? key}) : super(key: key);
 
   @override

@@ -1,3 +1,4 @@
+import 'package:bytebank/components/bloc_container.dart';
 import 'package:bytebank/screens/Deposito/formulario_deposito.dart';
 import 'package:bytebank/screens/contacts/list.dart';
 import 'package:bytebank/screens/dasboard/saldo_card.dart';
@@ -6,11 +7,10 @@ import 'package:bytebank/screens/transferencias/formulario.dart';
 import 'package:bytebank/screens/transferencias/ultimas.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:path/path.dart';
-
+import '../../models/user_name.dart';
 import '../user_name.dart';
 
-class DashboardContainer extends StatelessWidget {
+class DashboardContainer extends BlocContainer {
   const DashboardContainer({Key? key}) : super(key: key);
 
   @override
@@ -112,12 +112,13 @@ class DashboardView extends StatelessWidget {
     );
   }
 
-  void _showContactsList(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const ContactsList(),
-      ),
-    );
+  void _showContactsList(BuildContext blocContext) {
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (context) => const ContactsList(),
+    //   ),
+    // );
+    push(blocContext, const ContactsListContainer());
   }
 
   void _showChangeName(BuildContext blocContext) {

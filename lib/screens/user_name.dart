@@ -1,13 +1,10 @@
+import 'package:bytebank/components/bloc_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UserNameCubit extends Cubit<String> {
-  UserNameCubit(String userName) : super(userName);
+import '../models/user_name.dart';
 
-  void changeUserName(String userName) => emit(userName);
-}
-
-class UserNameContainer extends StatelessWidget {
+class UserNameContainer extends BlocContainer {
   const UserNameContainer({Key? key}) : super(key: key);
 
   @override
@@ -38,11 +35,11 @@ class UserNameView extends StatelessWidget {
             style: const TextStyle(fontSize: 24.0),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 16.0),
+            padding: const EdgeInsets.only(top: 16.0),
             child: SizedBox(
               width: double.maxFinite,
               child: ElevatedButton(
-                child: Text('Change'),
+                child: const Text('Change'),
                 onPressed: () {
                   final name = _userNameController.text;
                   context.read<UserNameCubit>().changeUserName(name);

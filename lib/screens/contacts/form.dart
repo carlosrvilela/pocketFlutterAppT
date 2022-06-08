@@ -54,6 +54,7 @@ class _ContactFormState extends State<ContactForm> {
                 width: double.maxFinite,
                 child: ElevatedButton(
                   onPressed: () {
+                    // ignore: unnecessary_nullable_for_final_variable_declarations
                     final String? nome = _controllerNome.text;
                     final int? numeroDaConta =
                         int.tryParse(_controllerNumeroConta.text);
