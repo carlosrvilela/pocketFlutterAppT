@@ -1,12 +1,17 @@
 import 'dart:async';
 import 'package:bytebank/models/saldo.dart';
 import 'package:bytebank/models/transferencias.dart';
+import 'package:bytebank/screens/counter.dart';
 import 'package:bytebank/screens/dasboard/dashboard.dart';
+import 'package:bytebank/screens/user_name.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+
+import 'components/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,18 +25,28 @@ void main() async {
   }
 
   runZonedGuarded<Future<void>>(() async {
-    runApp(MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => Saldo(0),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => Transferencias(),
-        ),
-      ],
-      child: const BytebankApp(),
-    ));
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => Saldo(0),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => Transferencias(),
+          ),
+        ],
+        child: const BytebankApp(),
+      ),
+    );
   }, FirebaseCrashlytics.instance.recordError);
+}
+
+class LogObserver extends BlocObserver {
+  @override
+  void onChange(BlocBase bloc, Change change) {
+    debugPrint('${bloc.runtimeType} > $change');
+    super.onChange(bloc, change);
+  }
 }
 
 class BytebankApp extends StatelessWidget {
@@ -39,21 +54,12 @@ class BytebankApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Bloc.observer = LogObserver();
+
     return MaterialApp(
-      theme: ThemeData(
-        primaryColor: Colors.green[900],
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: Colors.green[800], secondary: Colors.blueAccent[700]),
-        buttonTheme: ButtonThemeData(
-          buttonColor: Colors.blueAccent[700],
-          textTheme: ButtonTextTheme.primary,
-        ),
-        snackBarTheme: SnackBarThemeData(
-          backgroundColor: Colors.green[800],
-          actionTextColor: Colors.white,
-        ),
-      ),
-      home: const Dashboard(),
+      theme: bytebankTheme,
+      //home: const Dashboard(),
+      home: DashboardContainer(),
     );
   }
 }

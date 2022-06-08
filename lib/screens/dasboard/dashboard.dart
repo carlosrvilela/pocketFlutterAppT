@@ -5,15 +5,35 @@ import 'package:bytebank/screens/transactions/list.dart';
 import 'package:bytebank/screens/transferencias/formulario.dart';
 import 'package:bytebank/screens/transferencias/ultimas.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path/path.dart';
 
-class Dashboard extends StatelessWidget {
-  const Dashboard({Key? key}) : super(key: key);
+import '../user_name.dart';
+
+class DashboardContainer extends StatelessWidget {
+  const DashboardContainer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (contextProvider) => UserNameCubit('Fulano'),
+      child: const DashboardView(),
+    );
+  }
+}
+
+class DashboardView extends StatelessWidget {
+  const DashboardView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    //final userName = context.read<UserNameCubit>().state;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bytebank'),
+        title: BlocBuilder<UserNameCubit, String>(
+          builder: (context, state) => Text('Welcome $state'),
+        )
       ),
       body: ListView(
         scrollDirection: Axis.vertical,
@@ -77,6 +97,13 @@ class Dashboard extends StatelessWidget {
                     _showTransactionsList(context);
                   },
                 ),
+                _FeatureItem(
+                  'Change Name',
+                  Icons.person_outlined,
+                  onClick: () {
+                    _showChangeName(context);
+                  },
+                ),
               ],
             ),
           )
@@ -89,6 +116,17 @@ class Dashboard extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const ContactsList(),
+      ),
+    );
+  }
+
+  void _showChangeName(BuildContext blocContext) {
+    Navigator.of(blocContext).push(
+      MaterialPageRoute(
+        builder: (context) => BlocProvider.value(
+          value: BlocProvider.of<UserNameCubit>(blocContext),
+          child: const UserNameContainer(),
+        ),
       ),
     );
   }
