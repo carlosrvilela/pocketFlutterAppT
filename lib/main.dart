@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:bytebank/components/loaclization.dart';
 import 'package:bytebank/models/saldo.dart';
 import 'package:bytebank/models/transferencias.dart';
 import 'package:bytebank/screens/dasboard/dashboard.dart';
@@ -8,7 +9,6 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-
 import 'components/theme.dart';
 
 void main() async {
@@ -57,7 +57,7 @@ class BytebankApp extends StatelessWidget {
     return MaterialApp(
       theme: bytebankTheme,
       //home: const Dashboard(),
-      home: const DashboardContainer(),
+      home: const LocalizationContainer(child: DashboardContainer()),
     );
   }
 }

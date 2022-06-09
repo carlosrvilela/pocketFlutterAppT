@@ -1,4 +1,5 @@
 import 'package:bytebank/components/bloc_container.dart';
+import 'package:bytebank/components/loaclization.dart';
 import 'package:bytebank/screens/Deposito/formulario_deposito.dart';
 import 'package:bytebank/screens/contacts/list.dart';
 import 'package:bytebank/screens/dasboard/saldo_card.dart';
@@ -22,18 +23,34 @@ class DashboardContainer extends BlocContainer {
   }
 }
 
+class DashboardViewI18N extends ViewI18N {
+  DashboardViewI18N(BuildContext context) : super(context);
+
+  String get transfer => (localize({'pt-br':'Transferir', 'en': 'Transfer'})?? 'default');
+
+  String get transactionFeed => (localize({'pt-br':'Transações', 'en': 'Transaction Feed'})?? 'default');
+
+  String get changeName => (localize({'pt-br':'Mudar nome de usuário', 'en': 'Change Name'})?? 'default');
+
+  String get receiveDeposit => (localize({'pt-br':'Receber Depósito', 'en': 'Receive Deposit'})?? 'default');
+
+
+  String get newTransfer => (localize({'pt-br':'Nova Trnsferência', 'en': 'New Transfer'})?? 'default');
+
+}
+
+
 class DashboardView extends StatelessWidget {
   const DashboardView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    //final userName = context.read<UserNameCubit>().state;
-
+    final i18N = DashboardViewI18N(context);
     return Scaffold(
       appBar: AppBar(
         title: BlocBuilder<UserNameCubit, String>(
           builder: (context, state) => Text('Welcome $state'),
-        )
+        ),
       ),
       body: ListView(
         scrollDirection: Axis.vertical,
@@ -60,7 +77,7 @@ class DashboardView extends StatelessWidget {
                     ),
                   );
                 },
-                child: const Text('Receber Depósito'),
+                child: Text(i18N.receiveDeposit),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -73,32 +90,32 @@ class DashboardView extends StatelessWidget {
                     ),
                   );
                 },
-                child: const Text('Nova Transferência'),
+                child: Text(i18N.newTransfer),
               )
             ],
           ),
-          const UltimasTransferencias(),
+          const LatestTransfers(),
           SizedBox(
             height: 120,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
                 _FeatureItem(
-                  'Transfer',
+                  i18N.transfer,
                   Icons.monetization_on,
                   onClick: () {
                     _showContactsList(context);
                   },
                 ),
                 _FeatureItem(
-                  'Transaction Feed',
+                  i18N.transactionFeed,
                   Icons.description,
                   onClick: () {
                     _showTransactionsList(context);
                   },
                 ),
                 _FeatureItem(
-                  'Change Name',
+                  i18N.changeName,
                   Icons.person_outlined,
                   onClick: () {
                     _showChangeName(context);
@@ -113,11 +130,6 @@ class DashboardView extends StatelessWidget {
   }
 
   void _showContactsList(BuildContext blocContext) {
-    // Navigator.of(context).push(
-    //   MaterialPageRoute(
-    //     builder: (context) => const ContactsList(),
-    //   ),
-    // );
     push(blocContext, const ContactsListContainer());
   }
 
