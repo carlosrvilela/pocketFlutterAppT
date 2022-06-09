@@ -6,5 +6,4 @@ final Client client = InterceptedClient.build(
   interceptors: [LoggingInterceptor()],
   requestTimeout: const Duration(seconds: 5),
 );
-//'http://172.26.0.1:8080/transactions';
 const String connectionURL = 'http://172.26.0.1:8080/transactions';
