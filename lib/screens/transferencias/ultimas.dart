@@ -1,43 +1,65 @@
+import 'package:bytebank/components/bloc_container.dart';
 import 'package:bytebank/components/loaclization.dart';
 import 'package:bytebank/models/transferencias.dart';
 import 'package:bytebank/screens/transferencias/lista.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import '../../models/user_name.dart';
+import '../dasboard/dashboard.dart';
 
+// class LatestTransfersContainer extends BlocContainer {
+//   const LatestTransfersContainer({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocProvider(
+//       create: (contextProvider) => UserNameCubit(''),
+//       //value: BlocProvider.of<UserNameCubit>(context),
+//       child: I18NLoadingContainer(
+//             (messages) => LatestTransfersView(LatestTransfersViewLazyI18N(messages)),
+//       ),
+//     );
+//   }
+// }
 
-class LatestTransfersViewI18N extends ViewI18N {
-  LatestTransfersViewI18N(BuildContext context) : super(context);
+// class LatestTransfersViewLazyI18N {
+//   final I18NMessages _messages;
+//
+//   LatestTransfersViewLazyI18N(this._messages);
+//
+//   String get latestTransfers => _messages.get('latestTransfers') ?? 'default';
+//
+//   String get transferList => _messages.get('transferList') ?? 'default';
+//
+//   String get noRecentTransfers =>
+//       _messages.get('noRecentTransfers') ?? 'default';
+// }
 
-  String get title => (localize({'pt-br':'Ùltimas Trnsferência', 'en': 'Latest Transfers'})?? 'default');
+class LatestTransfersView extends StatelessWidget {
+  final DashboardViewLazyI18N _i18N;
+  //final LatestTransfersViewLazyI18N _i18N;
 
-  String get transferList => (localize({'pt-br':'Lista de Trnsferência', 'en': 'Transfer List'})?? 'default');
-
-  String get noRecentTransfers => (localize({'pt-br':'Sem Trnsferência Recentes', 'en': 'No recent transfers'})?? 'default');
-}
-
-class LatestTransfers extends StatelessWidget {
-  const LatestTransfers({Key? key}) : super(key: key);
+  const LatestTransfersView(this._i18N, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final i18N = LatestTransfersViewI18N(context);
     return Column(
       children: [
-         Text(
-          i18N.title,
+        Text(
+          _i18N.latestTransfers,
           style: const TextStyle(
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
           ),
         ),
         Consumer<Transferencias>(builder: (context, transfers, child) {
-          final latestTransfers =
-              transfers.transferencias.reversed.toList();
+          final latestTransfers = transfers.transferencias.reversed.toList();
 
           int length = transfers.transferencias.length;
 
           if (length == 0) {
-            return const NoTransfers();
+            return NoTransfersView(_i18N);
           } else if (length > 2) {
             length = 2;
           }
@@ -61,25 +83,27 @@ class LatestTransfers extends StatelessWidget {
               ),
             );
           },
-          child:  Text(i18N.transferList),
+          child: Text(_i18N.transferList),
         ),
       ],
     );
   }
 }
 
-class NoTransfers extends StatelessWidget {
-  const NoTransfers({Key? key}) : super(key: key);
+class NoTransfersView extends StatelessWidget {
+  final DashboardViewLazyI18N _i18N;
+  //final LatestTransfersViewLazyI18N _i18N;
+
+  const NoTransfersView(this._i18N, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final i18N = LatestTransfersViewI18N(context);
     return Card(
       margin: const EdgeInsets.all(40.0),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(
-          i18N.noRecentTransfers,
+          _i18N.noRecentTransfers,
           textAlign: TextAlign.center,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),

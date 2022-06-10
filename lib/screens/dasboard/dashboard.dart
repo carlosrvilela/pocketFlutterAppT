@@ -18,34 +18,62 @@ class DashboardContainer extends BlocContainer {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (contextProvider) => UserNameCubit('Fulano'),
-      child: const DashboardView(),
+      child: I18NLoadingContainer(
+        (messages) => DashboardView(DashboardViewLazyI18N(messages)),
+      ),
     );
   }
 }
 
-class DashboardViewI18N extends ViewI18N {
-  DashboardViewI18N(BuildContext context) : super(context);
+class DashboardViewLazyI18N {
+  final I18NMessages _messages;
 
-  String get transfer => (localize({'pt-br':'Transferir', 'en': 'Transfer'})?? 'default');
+  DashboardViewLazyI18N(this._messages);
 
-  String get transactionFeed => (localize({'pt-br':'Transações', 'en': 'Transaction Feed'})?? 'default');
+  String get transfer => _messages.get('transfer') ?? 'default';
 
-  String get changeName => (localize({'pt-br':'Mudar nome de usuário', 'en': 'Change Name'})?? 'default');
+  String get transactionFeed => _messages.get('transactionFeed') ?? 'default';
 
-  String get receiveDeposit => (localize({'pt-br':'Receber Depósito', 'en': 'Receive Deposit'})?? 'default');
+  String get changeName => _messages.get('changeName') ?? 'default';
 
+  String get receiveDeposit => _messages.get('receiveDeposit') ?? 'default';
 
-  String get newTransfer => (localize({'pt-br':'Nova Trnsferência', 'en': 'New Transfer'})?? 'default');
+  String get newTransfer => _messages.get('newTransfer') ?? 'default';
 
+  //
+  String get latestTransfers => _messages.get('latestTransfers') ?? 'default';
+
+  String get transferList => _messages.get('transferList') ?? 'default';
+
+  String get noRecentTransfers => _messages.get('noRecentTransfers') ?? 'default';
+
+// String get transfer =>
+//     (localize({'pt-br': 'Transferir', 'en': 'Transfer'}) ?? 'default');
+//
+// String get transactionFeed =>
+//     (localize({'pt-br': 'Transações', 'en': 'Transaction Feed'}) ??
+//         'default');
+//
+// String get changeName =>
+//     (localize({'pt-br': 'Mudar nome de usuário', 'en': 'Change Name'}) ??
+//         'default');
+//
+// String get receiveDeposit =>
+//     (localize({'pt-br': 'Receber Depósito', 'en': 'Receive Deposit'}) ??
+//         'default');
+//
+// String get newTransfer =>
+//     (localize({'pt-br': 'Nova Trnsferência', 'en': 'New Transfer'}) ??
+//         'default');
 }
 
-
 class DashboardView extends StatelessWidget {
-  const DashboardView({Key? key}) : super(key: key);
+  final DashboardViewLazyI18N _i18N;
+
+  const DashboardView(this._i18N, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final i18N = DashboardViewI18N(context);
     return Scaffold(
       appBar: AppBar(
         title: BlocBuilder<UserNameCubit, String>(
@@ -77,7 +105,7 @@ class DashboardView extends StatelessWidget {
                     ),
                   );
                 },
-                child: Text(i18N.receiveDeposit),
+                child: Text(_i18N.receiveDeposit),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -90,32 +118,33 @@ class DashboardView extends StatelessWidget {
                     ),
                   );
                 },
-                child: Text(i18N.newTransfer),
+                child: Text(_i18N.newTransfer),
               )
             ],
           ),
-          const LatestTransfers(),
+          LatestTransfersView(_i18N),
+          //const LatestTransfersContainer(),
           SizedBox(
             height: 120,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
                 _FeatureItem(
-                  i18N.transfer,
+                  _i18N.transfer,
                   Icons.monetization_on,
                   onClick: () {
                     _showContactsList(context);
                   },
                 ),
                 _FeatureItem(
-                  i18N.transactionFeed,
+                  _i18N.transactionFeed,
                   Icons.description,
                   onClick: () {
                     _showTransactionsList(context);
                   },
                 ),
                 _FeatureItem(
-                  i18N.changeName,
+                  _i18N.changeName,
                   Icons.person_outlined,
                   onClick: () {
                     _showChangeName(context);

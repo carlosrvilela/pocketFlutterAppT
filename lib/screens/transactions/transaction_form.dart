@@ -139,7 +139,7 @@ class TransactionFormStateless extends StatelessWidget {
         }
         if (state is SendingTransactionFormState ||
             state is SentTransactionFormState) {
-          return const ProgressView();
+          return const ProgressView('Sending...');
         }
         if (state is FatalErrorTransactionFormState) {
           return ErrorView(state._message);
