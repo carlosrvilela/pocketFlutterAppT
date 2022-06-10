@@ -19,7 +19,9 @@ class DashboardContainer extends BlocContainer {
     return BlocProvider(
       create: (contextProvider) => UserNameCubit('Fulano'),
       child: I18NLoadingContainer(
-        (messages) => DashboardView(DashboardViewLazyI18N(messages)),
+        creator: (messages) => DashboardView(DashboardViewLazyI18N(messages)),
+        locale: 'pt-br',
+        viewKey: "i18n_dashboard",
       ),
     );
   }
@@ -45,7 +47,8 @@ class DashboardViewLazyI18N {
 
   String get transferList => _messages.get('transferList') ?? 'default';
 
-  String get noRecentTransfers => _messages.get('noRecentTransfers') ?? 'default';
+  String get noRecentTransfers =>
+      _messages.get('noRecentTransfers') ?? 'default';
 
 // String get transfer =>
 //     (localize({'pt-br': 'Transferir', 'en': 'Transfer'}) ?? 'default');

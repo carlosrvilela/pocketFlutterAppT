@@ -81,19 +81,25 @@ class FatalErrorI18NMessagesState extends I18NMessagesState {
 }
 
 class I18NLoadingContainer extends BlocContainer {
-  final I18NWidgetCreator _creator;
+  I18NWidgetCreator creator;
+  String locale;
+  String viewKey;
 
-  const I18NLoadingContainer(this._creator, {Key? key}) : super(key: key);
+  I18NLoadingContainer({required this.creator, required this.locale ,required this.viewKey});
+  // I18NLoadingContainer({required String viewKey ,required I18NWidgetCreator creator}){
+  //   this.creator = creator;
+  //   this.viewKey = viewKey;
+  // }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<I18NMessagesCubit>(
       create: (BuildContext context) {
         final cubit = I18NMessagesCubit();
-        cubit.reload(I18NWebClient());
+        cubit.reload(I18NWebClient(locale, viewKey));
         return cubit;
       },
-      child: I18NLoadingView(_creator),
+      child: I18NLoadingView(creator),
     );
   }
 }
