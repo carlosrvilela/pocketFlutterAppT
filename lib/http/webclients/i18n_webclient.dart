@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import '../web_client.dart';
+
 const baseMessagesUri =
     'https://gist.githubusercontent.com/carlosrvilela/6bc488ddfec5383b35221bf6c29aee54/raw/';
 

@@ -1,44 +1,11 @@
-import 'package:bytebank/components/bloc_container.dart';
-import 'package:bytebank/components/loaclization.dart';
 import 'package:bytebank/models/transferencias.dart';
+import 'package:bytebank/screens/dasboard/dasboard_i18n.dart';
 import 'package:bytebank/screens/transferencias/lista.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import '../../models/user_name.dart';
-import '../dasboard/dashboard.dart';
-
-// class LatestTransfersContainer extends BlocContainer {
-//   const LatestTransfersContainer({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocProvider(
-//       create: (contextProvider) => UserNameCubit(''),
-//       //value: BlocProvider.of<UserNameCubit>(context),
-//       child: I18NLoadingContainer(
-//             (messages) => LatestTransfersView(LatestTransfersViewLazyI18N(messages)),
-//       ),
-//     );
-//   }
-// }
-
-// class LatestTransfersViewLazyI18N {
-//   final I18NMessages _messages;
-//
-//   LatestTransfersViewLazyI18N(this._messages);
-//
-//   String get latestTransfers => _messages.get('latestTransfers') ?? 'default';
-//
-//   String get transferList => _messages.get('transferList') ?? 'default';
-//
-//   String get noRecentTransfers =>
-//       _messages.get('noRecentTransfers') ?? 'default';
-// }
 
 class LatestTransfersView extends StatelessWidget {
   final DashboardViewLazyI18N _i18N;
-  //final LatestTransfersViewLazyI18N _i18N;
 
   const LatestTransfersView(this._i18N, {Key? key}) : super(key: key);
 

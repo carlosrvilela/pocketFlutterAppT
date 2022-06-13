@@ -25,26 +25,3 @@ class Progress extends StatelessWidget {
     );
   }
 }
-
-class ProgressView extends StatelessWidget {
-  // String message;
-  //
-  // ProgressView({Key? key, String message = 'Sending...'}) : super(key: key){
-  //  this.message = message;
-  // }
-  final String message;
-
-  const ProgressView(this.message, {Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Processing'),
-      ),
-      body: Progress(
-        message: message,
-      ),
-    );
-  }
-}

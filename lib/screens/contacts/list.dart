@@ -1,5 +1,5 @@
 import 'package:bytebank/components/bloc_container.dart';
-import 'package:bytebank/components/progress.dart';
+import 'package:bytebank/components/progress/progress.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/screens/contacts/form.dart';
 import 'package:bytebank/screens/transactions/transaction_form.dart';
