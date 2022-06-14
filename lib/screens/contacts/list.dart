@@ -7,14 +7,17 @@ import 'package:flutter/material.dart';
 import '../../database/dao/contact_dao.dart';
 
 class ContactsList extends StatefulWidget {
-  const ContactsList({Key? key}) : super(key: key);
+  final ContactDao contactDao;
+  const ContactsList({Key? key, required this.contactDao}) : super(key: key);
 
   @override
-  State<ContactsList> createState() => _ContactsListState();
+  State<ContactsList> createState() => _ContactsListState(contactDao: contactDao);
 }
 
 class _ContactsListState extends State<ContactsList> {
-  final ContactDao _contactDao = ContactDao();
+  final ContactDao contactDao;
+
+  _ContactsListState({required this.contactDao});
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +28,13 @@ class _ContactsListState extends State<ContactsList> {
       body: FutureBuilder<List<Contact>>(
         initialData: const [],
         future: Future.delayed(const Duration(seconds: 1))
-            .then((value) => _contactDao.findAll()),
+            .then((value) => contactDao.findAll()),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
               break;
             case ConnectionState.waiting:
-              return const Progress(message: 'Bucando contatos');
+              return const Progress(message: 'Searching Contacts');
             case ConnectionState.active:
               break;
             case ConnectionState.done:
@@ -61,7 +64,7 @@ class _ContactsListState extends State<ContactsList> {
           Navigator.of(context)
               .push(
                 MaterialPageRoute(
-                  builder: (context) => const ContactForm(),
+                  builder: (context) => ContactForm(contactDao: contactDao),
                 ),
               )
               .then(

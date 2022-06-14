@@ -11,7 +11,7 @@ class Contact {
 
   @override
   String toString() {
-    return 'Contact{id: $id ,nome: $name, numeroConta: $accountNumber}';
+    return 'Contact{id: $id ,name: $name, accountNumber: $accountNumber}';
   }
 
   Contact.fromJson(Map<String, dynamic> json)
@@ -24,4 +24,15 @@ class Contact {
         'name': name,
         'accountNumber': accountNumber,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Contact &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          accountNumber == other.accountNumber;
+
+  @override
+  int get hashCode => name.hashCode ^ accountNumber.hashCode;
 }

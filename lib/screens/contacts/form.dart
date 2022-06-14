@@ -5,45 +5,49 @@ import '../../components/invalid_filds_popup.dart';
 import '../../models/contact.dart';
 
 class ContactForm extends StatefulWidget {
-  const ContactForm({Key? key}) : super(key: key);
+  final ContactDao contactDao;
+
+  const ContactForm({Key? key, required this.contactDao}) : super(key: key);
 
   @override
-  State<ContactForm> createState() => _ContactFormState();
+  State<ContactForm> createState() => _ContactFormState(contactDao: contactDao);
 }
 
 class _ContactFormState extends State<ContactForm> {
-  final TextEditingController _controllerNome = TextEditingController();
-  final TextEditingController _controllerNumeroConta = TextEditingController();
-  final ContactDao _contactDao = ContactDao();
+  final TextEditingController _controllerName = TextEditingController();
+  final TextEditingController _controllerAccountNumber = TextEditingController();
+  final ContactDao contactDao;
+
+  _ContactFormState({required this.contactDao});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Novo Contato'),
+        title: const Text('New contact'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
-              controller: _controllerNome,
+              controller: _controllerName,
               style: const TextStyle(
                 fontSize: 24.0,
               ),
               decoration: const InputDecoration(
-                labelText: 'Nome Completo',
+                labelText: 'Full Name',
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: TextField(
-                controller: _controllerNumeroConta,
+                controller: _controllerAccountNumber,
                 style: const TextStyle(
                   fontSize: 24.0,
                 ),
                 decoration: const InputDecoration(
-                  labelText: 'Número da Conta',
+                  labelText: 'Account Number',
                 ),
                 keyboardType: TextInputType.number,
               ),
@@ -54,21 +58,19 @@ class _ContactFormState extends State<ContactForm> {
                 width: double.maxFinite,
                 child: ElevatedButton(
                   onPressed: () {
-                    final String? nome = _controllerNome.text;
-                    final int? numeroDaConta =
-                        int.tryParse(_controllerNumeroConta.text);
-                    if (nome != null && nome != '' && numeroDaConta != null) {
-                      final Contact novoCcontato =
-                          Contact(0, nome, numeroDaConta);
-                      _contactDao.save(novoCcontato).then(
-                        (id) => Navigator.pop(context),
-                      );
+                    final String? name = _controllerName.text;
+                    final int? accountNumber =
+                    int.tryParse(_controllerAccountNumber.text);
+                    if (name != null && name != '' && accountNumber != null) {
+                      final Contact newContact =
+                      Contact(0, name, accountNumber);
+                      _saveNewContact(newContact, context);
                     } else {
                       final IvalidFildsPopUP invalidFilds = IvalidFildsPopUP();
                       invalidFilds.throwPopUp(context);
                     }
                   },
-                  child: const Text('Adicionar Novo Contato'),
+                  child: const Text('Add New Contact'),
                 ),
               ),
             ),
@@ -76,5 +78,11 @@ class _ContactFormState extends State<ContactForm> {
         ),
       ),
     );
+  }
+
+  void _saveNewContact(Contact newContact, BuildContext context) async {
+    await contactDao.save(newContact);
+    if (!mounted) return;
+    Navigator.pop(context);
   }
 }
