@@ -10,6 +10,9 @@ class MockContactDao extends Mock implements ContactDao {
   Future<List<Contact>> findAll() async{
     return [mockContact];
   }
-}
 
-typedef MockFindAll = Future<List<Contact>>;
+  @override
+  Future<int> save(Contact contact) async {
+    return 0;
+  }
+}
