@@ -1,13 +1,12 @@
 import 'package:bytebank/components/invalid_filds_popup.dart';
 import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contact.dart';
+import 'package:bytebank/widgets/app_dependencies.dart';
 import 'package:flutter/material.dart';
 
 
 class ContactForm extends StatefulWidget {
-  final ContactDao contactDao;
-
-  const ContactForm({Key? key, required this.contactDao}) : super(key: key);
+  const ContactForm({Key? key}) : super(key: key);
 
   @override
   State<ContactForm> createState() => _ContactFormState();
@@ -19,6 +18,7 @@ class _ContactFormState extends State<ContactForm> {
 
   @override
   Widget build(BuildContext context) {
+    final dependencies = AppDependencies.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('New contact'),
@@ -55,13 +55,14 @@ class _ContactFormState extends State<ContactForm> {
                 width: double.maxFinite,
                 child: ElevatedButton(
                   onPressed: () {
+                    // ignore: unnecessary_nullable_for_final_variable_declarations
                     final String? name = _controllerName.text;
                     final int? accountNumber =
                     int.tryParse(_controllerAccountNumber.text);
                     if (name != null && name != '' && accountNumber != null) {
                       final Contact newContact =
                       Contact(0, name, accountNumber);
-                      _saveNewContact(newContact, context);
+                      _saveNewContact(dependencies!.contactDao ,newContact, context);
                     } else {
                       final IvalidFildsPopUP invalidFilds = IvalidFildsPopUP();
                       invalidFilds.throwPopUp(context);
@@ -77,8 +78,8 @@ class _ContactFormState extends State<ContactForm> {
     );
   }
 
-  void _saveNewContact(Contact newContact, BuildContext context) async {
-    await widget.contactDao.save(newContact);
+  void _saveNewContact(ContactDao contactDao ,Contact newContact, BuildContext context) async {
+    await contactDao.save(newContact);
     if (!mounted) return;
     Navigator.pop(context);
   }

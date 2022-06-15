@@ -6,17 +6,20 @@ import 'package:bytebank/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+
 import '../components/matchers.dart';
 import '../components/mocks.dart';
 import 'actions.dart';
-
 
 @GenerateMocks([ContactDao])
 void main() {
   testWidgets('Should create a new contact', (WidgetTester tester) async {
     final mockContactDao = MockContactDao();
-    await tester.pumpWidget(BytebankApp(contactDao: mockContactDao));
+    final mockTransactionWebClient = MockTransactionWebClient();
+    await tester.pumpWidget(BytebankApp(
+      contactDao: mockContactDao,
+      transactionWebClient: mockTransactionWebClient,
+    ));
 
     final dashboard = find.byType(Dashboard);
     expect(dashboard, findsOneWidget);
@@ -36,19 +39,20 @@ void main() {
     await tester.pumpAndSettle();
     final contactForm = find.byType(ContactForm);
     expect(contactForm, findsOneWidget);
-    final nameTextField = find.byWidgetPredicate((widget){
-      return textFieldMatcher(widget, 'Full Name');
+    final nameTextField = find.byWidgetPredicate((widget) {
+      return textFieldByLabelTextMatcher(widget, 'Full Name');
     });
     expect(nameTextField, findsOneWidget);
     await tester.enterText(nameTextField, 'Fulano');
 
-    final accountNumberTextField = find.byWidgetPredicate((widget){
-     return textFieldMatcher(widget, 'Account Number');
+    final accountNumberTextField = find.byWidgetPredicate((widget) {
+      return textFieldByLabelTextMatcher(widget, 'Account Number');
     });
     expect(accountNumberTextField, findsOneWidget);
     await tester.enterText(accountNumberTextField, '1000');
 
-    final newContactButton = find.widgetWithText(ElevatedButton, 'Add New Contact');
+    final newContactButton =
+        find.widgetWithText(ElevatedButton, 'Add New Contact');
     expect(newContactButton, findsOneWidget);
     await tester.tap(newContactButton);
 
@@ -57,6 +61,5 @@ void main() {
     final contactsListBack = find.byType(ContactsList);
     expect(contactsListBack, findsOneWidget);
     //verify(mockContactDao.findAll());
-
   });
 }

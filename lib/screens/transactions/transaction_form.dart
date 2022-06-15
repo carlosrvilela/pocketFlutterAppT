@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bytebank/components/response_dialog.dart';
 import 'package:bytebank/components/transaction_auth_dialog.dart';
 import 'package:bytebank/http/webclients/transaction_webclient.dart';
+import 'package:bytebank/widgets/app_dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import '../../components/invalid_filds_popup.dart';
@@ -16,17 +17,17 @@ class TransactionForm extends StatefulWidget {
   const TransactionForm(this.contact, {Key? key}) : super(key: key);
 
   @override
-  _TransactionFormState createState() => _TransactionFormState();
+  TransactionFormState createState() => TransactionFormState();
 }
 
-class _TransactionFormState extends State<TransactionForm> {
+class TransactionFormState extends State<TransactionForm> {
   final TextEditingController _valueController = TextEditingController();
-  final TransactionWebClient _transactionWebClient = TransactionWebClient();
   final String transactionId = const Uuid().v4();
   bool _sending = false;
 
   @override
   Widget build(BuildContext context) {
+    final dependencies = AppDependencies.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('New transaction'),
@@ -90,7 +91,11 @@ class _TransactionFormState extends State<TransactionForm> {
                               return TransactionAuthDialog(
                                 onConfirm: (String password) {
                                   _saveTransaction(
-                                      transactionCreated, password, context);
+                                    dependencies!.transactionWebClient,
+                                    transactionCreated,
+                                    password,
+                                    context,
+                                  );
                                 },
                               );
                             });
@@ -111,11 +116,13 @@ class _TransactionFormState extends State<TransactionForm> {
   }
 
   void _saveTransaction(
+    TransactionWebClient transactionWebClient,
     Transaction transactionCreated,
     String password,
     BuildContext context,
   ) async {
     Transaction? transaction = await _sendTransaction(
+      transactionWebClient,
       transactionCreated,
       password,
       context,
@@ -124,6 +131,7 @@ class _TransactionFormState extends State<TransactionForm> {
   }
 
   Future<Transaction?> _sendTransaction(
+    TransactionWebClient transactionWebClient,
     Transaction transactionCreated,
     String password,
     BuildContext context,
@@ -131,7 +139,7 @@ class _TransactionFormState extends State<TransactionForm> {
     setState(() {
       _sending = true;
     });
-    final Transaction? transaction = await _transactionWebClient
+    final Transaction? transaction = await transactionWebClient
         .save(transactionCreated, password)
         .catchError(
       (error) {

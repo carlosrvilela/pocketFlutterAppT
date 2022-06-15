@@ -2,13 +2,11 @@ import 'package:bytebank/components/progress.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/screens/contacts/form.dart';
 import 'package:bytebank/screens/transactions/transaction_form.dart';
+import 'package:bytebank/widgets/app_dependencies.dart';
 import 'package:flutter/material.dart';
 
-import '../../database/dao/contact_dao.dart';
-
 class ContactsList extends StatefulWidget {
-  final ContactDao contactDao;
-  const ContactsList({Key? key, required this.contactDao}) : super(key: key);
+  const ContactsList({Key? key,}) : super(key: key);
 
   @override
   State<ContactsList> createState() => _ContactsListState();
@@ -18,6 +16,7 @@ class _ContactsListState extends State<ContactsList> {
 
   @override
   Widget build(BuildContext context) {
+    final dependencies = AppDependencies.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Transfer'),
@@ -25,7 +24,7 @@ class _ContactsListState extends State<ContactsList> {
       body: FutureBuilder<List<Contact>>(
         initialData: const [],
         future: Future.delayed(const Duration(seconds: 1))
-            .then((value) => widget.contactDao.findAll()),
+            .then((value) => dependencies!.contactDao.findAll()),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -61,7 +60,7 @@ class _ContactsListState extends State<ContactsList> {
           Navigator.of(context)
               .push(
                 MaterialPageRoute(
-                  builder: (context) => ContactForm(contactDao: widget.contactDao),
+                  builder: (context) => const ContactForm(),
                 ),
               )
               .then(
