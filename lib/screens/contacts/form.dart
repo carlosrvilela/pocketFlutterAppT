@@ -1,8 +1,8 @@
+import 'package:bytebank/components/invalid_filds_popup.dart';
 import 'package:bytebank/database/dao/contact_dao.dart';
+import 'package:bytebank/models/contact.dart';
 import 'package:flutter/material.dart';
 
-import '../../components/invalid_filds_popup.dart';
-import '../../models/contact.dart';
 
 class ContactForm extends StatefulWidget {
   final ContactDao contactDao;
@@ -10,15 +10,12 @@ class ContactForm extends StatefulWidget {
   const ContactForm({Key? key, required this.contactDao}) : super(key: key);
 
   @override
-  State<ContactForm> createState() => _ContactFormState(contactDao: contactDao);
+  State<ContactForm> createState() => _ContactFormState();
 }
 
 class _ContactFormState extends State<ContactForm> {
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerAccountNumber = TextEditingController();
-  final ContactDao contactDao;
-
-  _ContactFormState({required this.contactDao});
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +78,7 @@ class _ContactFormState extends State<ContactForm> {
   }
 
   void _saveNewContact(Contact newContact, BuildContext context) async {
-    await contactDao.save(newContact);
+    await widget.contactDao.save(newContact);
     if (!mounted) return;
     Navigator.pop(context);
   }

@@ -11,13 +11,10 @@ class ContactsList extends StatefulWidget {
   const ContactsList({Key? key, required this.contactDao}) : super(key: key);
 
   @override
-  State<ContactsList> createState() => _ContactsListState(contactDao: contactDao);
+  State<ContactsList> createState() => _ContactsListState();
 }
 
 class _ContactsListState extends State<ContactsList> {
-  final ContactDao contactDao;
-
-  _ContactsListState({required this.contactDao});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +25,7 @@ class _ContactsListState extends State<ContactsList> {
       body: FutureBuilder<List<Contact>>(
         initialData: const [],
         future: Future.delayed(const Duration(seconds: 1))
-            .then((value) => contactDao.findAll()),
+            .then((value) => widget.contactDao.findAll()),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -42,7 +39,7 @@ class _ContactsListState extends State<ContactsList> {
               return ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
                   final Contact contact = contacts[index];
-                  return _ContactItem(
+                  return ContactItem(
                     contact,
                     onClick: () {
                       Navigator.of(context).push(
@@ -64,7 +61,7 @@ class _ContactsListState extends State<ContactsList> {
           Navigator.of(context)
               .push(
                 MaterialPageRoute(
-                  builder: (context) => ContactForm(contactDao: contactDao),
+                  builder: (context) => ContactForm(contactDao: widget.contactDao),
                 ),
               )
               .then(
@@ -77,11 +74,11 @@ class _ContactsListState extends State<ContactsList> {
   }
 }
 
-class _ContactItem extends StatelessWidget {
+class ContactItem extends StatelessWidget {
   final Contact contact;
   final Function onClick;
 
-  const _ContactItem(this.contact, {required this.onClick});
+  const ContactItem(this.contact, {Key? key, required this.onClick}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

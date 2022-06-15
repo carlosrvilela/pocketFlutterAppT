@@ -6,9 +6,11 @@ import 'package:bytebank/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+import '../components/matchers.dart';
+import '../components/mocks.dart';
+import 'actions.dart';
 
-import 'components/matchers.dart';
-import 'components/mocks.dart';
 
 @GenerateMocks([ContactDao])
 void main() {
@@ -19,14 +21,13 @@ void main() {
     final dashboard = find.byType(Dashboard);
     expect(dashboard, findsOneWidget);
 
-    final transferFeatureItem = find.byWidgetPredicate((widget) =>
-        featureItemMatcher(widget, 'Transfer', Icons.monetization_on));
-    expect(transferFeatureItem, findsOneWidget);
+    await clickOnTheTransferFeatureItem(tester);
 
-    await tester.tap(transferFeatureItem);
     await tester.pumpAndSettle();
     final contactsList = find.byType(ContactsList);
     expect(contactsList, findsOneWidget);
+
+    //verify(mockContactDao.findAll()).called(1);//Erro Used on a non-mockito object
 
     final fabNewContact = find.widgetWithIcon(FloatingActionButton, Icons.add);
     expect(fabNewContact, findsOneWidget);
@@ -36,19 +37,13 @@ void main() {
     final contactForm = find.byType(ContactForm);
     expect(contactForm, findsOneWidget);
     final nameTextField = find.byWidgetPredicate((widget){
-      if (widget is TextField){
-        return widget.decoration!.labelText == 'Full Name';
-      }
-      return false;
+      return textFieldMatcher(widget, 'Full Name');
     });
     expect(nameTextField, findsOneWidget);
     await tester.enterText(nameTextField, 'Fulano');
 
     final accountNumberTextField = find.byWidgetPredicate((widget){
-      if (widget is TextField){
-        return widget.decoration!.labelText == 'Account Number';
-      }
-      return false;
+     return textFieldMatcher(widget, 'Account Number');
     });
     expect(accountNumberTextField, findsOneWidget);
     await tester.enterText(accountNumberTextField, '1000');
@@ -58,8 +53,10 @@ void main() {
     await tester.tap(newContactButton);
 
     await tester.pumpAndSettle();
+    //verify(mockContactDao.save(mockContact));
     final contactsListBack = find.byType(ContactsList);
     expect(contactsListBack, findsOneWidget);
+    //verify(mockContactDao.findAll());
 
   });
 }
